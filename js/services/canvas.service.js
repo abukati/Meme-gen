@@ -169,7 +169,10 @@ const txtAlignRight = (ev) => {
 }
 
 const fontFamChange = (ev) => {
-
+   console.log(ev.target.value);
+   ev.preventDefault()
+   gMeme.lines[gMeme.selectedLineIdx].font = ev.target.value
+   renderCanvas()
 }
 
 const strokeChange = (ev) => {
