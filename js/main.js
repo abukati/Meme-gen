@@ -14,25 +14,22 @@ function renderGrid() {
 }
 
 const renderCanvas = () => {
-   let ctx = getCtx()
-   ctx.beginPath()
+   gCtx.beginPath()
    let canvas = getCanvas()
    let img = new Image()
    let meme = getMeme()
-   console.log(meme);
    img.src = `/misc/meme-imgs/${meme.selectedImgId}.jpg`
-   setMemeTxt()
    img.onload = () => {
       resizeCanvas(img)
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      gCtx.drawImage(img, 0, 0, canvas.width, canvas.height)
       drawTxt()
-      if (meme.selectedLineIdx >= 0) drawRect(meme.lines[meme.selectedLineIdx].x, meme.lines[meme.selectedLineIdx].y, meme.lines[meme.selectedLineIdx])
-      else resetValues()
+      if (meme.selectedLineIdx !== -1) drawRect(meme.lines[meme.selectedLineIdx].posX, meme.lines[meme.selectedLineIdx].posY, meme.lines[meme.selectedLineIdx])
+      else resetInputs()
    }
-   ctx.closePath()
+   gCtx.closePath()
 }
 
-function resetValues() {
+function resetInputs() {
    document.querySelector('.text-input').value = ''
    document.querySelector('.stroke-input').value = '#000000'
    document.querySelector('.fill-input').value = '#ffffff'
@@ -53,20 +50,25 @@ function onMemeClick(id) {
 function drawTxt() {
    gCtx.beginPath()
    gMeme.lines.forEach(line => {
-      gCtx.lineWidth = 1
+      gCtx.lineWidth = window.innerWidth < 768 ? 1 : 3
       gCtx.strokeStyle = line.stroke
       gCtx.fillStyle = line.color
-      gCtx.font = `${line.size}px ${line.font}`
+      gCtx.font = `bold ${line.size}px ${line.font}`
       gCtx.textAlign = line.align
-      gCtx.fillText(line.txt, line.posX, line.posY)
-      gCtx.strokeText(line.txt, line.posX, line.posY)
+      gCtx.fillText(line.txt, (elCanvas.width / 2), line.posY)
+      gCtx.strokeText(line.txt, (elCanvas.width / 2), line.posY)
    })
    gCtx.closePath()
 }
 
 function drawRect(posX, posY, txt) {
-   let txtLength = gCtx.meesureText(gMeme.lines[gMeme.selectedLineIdx].txt)
+   let txtLength = gCtx.measureText(gMeme.lines[gMeme.selectedLineIdx].txt)
    let height = txtLength.fontBoundingBoxAscent + txtLength.fontBoundingBoxDescent
    let width = txtLength.width
    gCtx.beginPath()
+   gCtx.setLineDash([5, 5])
+   gCtx.strokeStyle = 'black'
+   if (window.innerWidth < 768) gCtx.strokeRect(posX - width * 0.7, posY - parseInt(txt.size), width + 15, height)
+   else gCtx.strokeRect(posX - width * 0.5 - 70, posY - parseInt(txt.size), width + 35, height)
+   gCtx.closePath()
 }

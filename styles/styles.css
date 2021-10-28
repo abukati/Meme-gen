@@ -230,12 +230,13 @@ input[type="color"] {
       right: -100%;
       top: 4.5rem;
   
-      width: 100%;
+      width: 95%;
       height: fit-content;
-      border-radius: 0 0 15px 15px;
+      border-radius: 15px;
   
       text-align: center;
-      background-color: #2c2c2c;
+      background: rgb(12,152,185);
+      background: linear-gradient(140deg, rgba(12,152,185,1) 0%, rgba(51,190,109,1) 100%);
   
       z-index: 1000;
       transition: 0.3s;
@@ -243,10 +244,36 @@ input[type="color"] {
 
    .nav-links ul {
       flex-direction: column;
+      margin: 0;
+   }
+
+   .nav-links ul > li:not(:last-child) {
+      margin: 0;
+   }
+
+   .nav-links li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      height: 150px;
+   }
+
+   .nav-links li:hover {
+      background-color: rgb(62, 62, 73);
+   }
+
+   .nav-links li:first-child:hover {
+      border-radius: 15px 15px 0 0;
+   }
+
+   .nav-links li:last-child:hover {
+      border-radius: 0 0 15px 15px;
    }
   
    .nav-links.active {
       right: 0;
+      margin: 0 14px;
    }
 
    .hamburger {
