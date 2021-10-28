@@ -8,7 +8,7 @@ document.body.onload = () => {
 function renderGrid() {
    let elGrid = document.querySelector('.template-gallery')
    let images = getImages()
-   let strHtml = images.map(image => `<img src="./${image.url}" alt="meme" 
+   let strHtml = images.map(image => `<img src="${image.url}" alt="meme" 
       class="template-img" onclick="onMemeClick(${image.id})" />`).join('')
    elGrid.innerHTML = strHtml
 }
@@ -18,7 +18,7 @@ const renderCanvas = () => {
    let canvas = getCanvas()
    let img = new Image()
    let meme = getMeme()
-   img.src = `./misc/meme-imgs/${meme.selectedImgId}.jpg`
+   img.src = `../misc/meme-imgs/${meme.selectedImgId}.jpg`
    img.onload = () => {
       resizeCanvas(img)
       gCtx.drawImage(img, 0, 0, canvas.width, canvas.height)
