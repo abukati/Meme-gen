@@ -18,7 +18,7 @@ const renderCanvas = () => {
    let canvas = getCanvas()
    let img = new Image()
    let meme = getMeme()
-   img.src = `./misc/meme-imgs/${meme.selectedImgId}.jpg`
+   img.src = `../misc/meme-imgs/${meme.selectedImgId}.jpg`
    img.onload = () => {
       resizeCanvas(img)
       gCtx.drawImage(img, 0, 0, canvas.width, canvas.height)
