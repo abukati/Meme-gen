@@ -221,6 +221,32 @@ input[type="color"] {
    height: 25px;
 }
 
+.sharing-card {
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+
+   background: rgb(12,152,185);
+   background: linear-gradient(140deg, rgba(12,152,185,1) 0%, rgba(51,190,109,1) 100%);
+
+   border-radius: 15px;
+
+   height: 80px;
+   width: 250px;
+}
+
+.btn {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.sharing-card > .btn:hover {
+   background-color: linen;
+   border-radius: 5px;
+   box-shadow: 2px 2px 2px 2px rgba(255,255,255,0.4);
+}
+
 .hide-modal {
    display: none;
 }
