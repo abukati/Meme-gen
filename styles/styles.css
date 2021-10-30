@@ -214,6 +214,8 @@ input[type="color"] {
 .modal-container {
    display: flex;
    justify-content: center;
+
+   margin-top: 15px;
 }
 
 .modal-container img {
