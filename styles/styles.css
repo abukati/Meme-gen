@@ -75,7 +75,6 @@ body {
 }
 
 main {
-   
    margin: 10px;
    padding: 10px;
 
@@ -210,6 +209,21 @@ input[type="color"] {
    align-items: center;
 }
 
+/* SHARE MODAL */
+
+.modal-container {
+   display: flex;
+   justify-content: center;
+}
+
+.modal-container img {
+   width: 25px;
+   height: 25px;
+}
+
+.hide-modal {
+   display: none;
+}
 
 /* BURGER MENU */
 

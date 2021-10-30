@@ -5,7 +5,7 @@ const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 
 const gMeme = {
    selectedImgId: 0,
-   selectedLineIdx: 0,
+   selectedLineIdx: -1,
    lines: [
       {
          txt: 'Undefined everywhere!',
@@ -85,27 +85,23 @@ const getMeme = () => gMeme
 
 
 const pressLine = (ev) => {
-   ev.preventDefault()
    selectedLine(ev)
-   let currPos = getClickedPos(ev)
    if (gMeme.selectedLineIdx !== -1) {
       document.body.style.cursor = 'grabbing'
       isDragging = true
    }
 }
 
-const releaseLine = (ev) => {
-   ev.preventDefault()
+const releaseLine = () => {
    document.body.style.cursor = 'auto'
    isDragging = false
 }
 
 const dragLine = (ev) => {
-   ev.preventDefault()
    if (isDragging) {
       let currPos = getClickedPos(ev)
-      gMeme.lines[gMeme.selectedLineIdx].posY = currPos.posY
       gMeme.lines[gMeme.selectedLineIdx].posX = currPos.posX
+      gMeme.lines[gMeme.selectedLineIdx].posY = currPos.posY
       renderCanvas()
    }
 }
@@ -118,17 +114,16 @@ const txtInput = (ev) => {
    }
 }
 
-const addTxt = (ev) => {
-   ev.preventDefault()
+const addTxt = () => {
    const elTxtInput = document.querySelector('.text-input')
+   if (!elTxtInput.value) return
    let newTxt = memeTxtChange(elTxtInput.value)
    gMeme.lines.push(newTxt)
    resetInputs()
    renderCanvas()
 }
 
-const removeTxt = (ev) => {
-   ev.preventDefault()
+const removeTxt = () => {
    if (gMeme.selectedLineIdx !== -1) {
       gMeme.lines.splice(gMeme.selectedLineIdx, 1)
       if (!gMeme.lines.length) gMeme.selectedLineIdx = -1
@@ -136,57 +131,95 @@ const removeTxt = (ev) => {
    }
 }
 
-const increaseFontSize = (ev) => {
+const increaseFontSize = () => {
    if (gMeme.selectedLineIdx !== -1) {
       gMeme.lines[gMeme.selectedLineIdx].size++
-      console.log(gMeme.lines[gMeme.selectedLineIdx].size);
       renderCanvas()
    }
 }
 
-const decreaseFontSize = (ev) => {
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx].size--
-   renderCanvas()
+const decreaseFontSize = () => {
+   if (gMeme.selectedLineIdx !== -1) {
+      gMeme.lines[gMeme.selectedLineIdx].size--
+      renderCanvas()
+   }
 }
 
-const txtAlignLeft = (ev) => {
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx].align = 'right'
-   renderCanvas()
+const txtAlignLeft = () => {
+   if (gMeme.selectedLineIdx !== -1) {
+      gMeme.lines[gMeme.selectedLineIdx].align = 'right'
+      renderCanvas()
+   }
 }
 
-const txtAlignCenter = (ev) => {
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx].align = 'center'
-   renderCanvas()
+const txtAlignCenter = () => {
+   if (gMeme.selectedLineIdx !== -1) {
+      gMeme.lines[gMeme.selectedLineIdx].align = 'center'
+      renderCanvas()
+   }
 }
 
-const txtAlignRight = (ev) => {
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx].align = 'left'
-   renderCanvas()
+const txtAlignRight = () => {
+   if (gMeme.selectedLineIdx !== -1) {
+      gMeme.lines[gMeme.selectedLineIdx].align = 'left'
+      renderCanvas()
+   }
 }
 
 const fontFamChange = (ev) => {
-   console.log(ev.target.value);
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx].font = ev.target.value
-   renderCanvas()
+   if (gMeme.selectedLineIdx !== -1) {
+      gMeme.lines[gMeme.selectedLineIdx].font = ev.target.value
+      renderCanvas()
+   }
 }
 
 const strokeChange = (ev) => {
-   gMeme.lines[gMeme.selectedLineIdx].stroke = ev.target.value
-   renderCanvas()
+   if (gMeme.selectedLineIdx !== -1) {
+      gMeme.lines[gMeme.selectedLineIdx].stroke = ev.target.value
+      renderCanvas()
+   }
 }
 
 const fillChange = (ev) => {
-   gMeme.lines[gMeme.selectedLineIdx].color = ev.target.value
+   if (gMeme.selectedLineIdx !== -1) {
+      gMeme.lines[gMeme.selectedLineIdx].color = ev.target.value
+      renderCanvas()
+   }
+}
+
+function switchLine() {
+   gMeme.selectedLineIdx = (gMeme.selectedLineIdx === gMeme.lines.length - 1) ? 0 : gMeme.selectedLineIdx + 1
+   let elTxtInput = document.querySelector('.text-input')
+   elTxtInput.value = gMeme.lines[gMeme.selectedLineIdx].txt
    renderCanvas()
 }
 
-const saveMeme = (ev) => {
+function moveLineUp(ev) {
+   if (gMeme.selectedLineIdx !== -1) {
+      ev.preventDefault()
+      gMeme.lines[gMeme.selectedLineIdx].posX--
+      renderCanvas()
+   }
+}
 
+function moveLineDown(ev) {
+   if (gMeme.selectedLineIdx !== -1) {
+      ev.preventDefault()
+      gMeme.lines[gMeme.selectedLineIdx].posY++
+      renderCanvas()
+   }
+}
+
+function touchStart(ev) {
+   pressLine(ev.touches[0])
+}
+
+function touchEnd(ev) {
+   releaseLine(ev.changedTouches[0])
+}
+
+function selectAllTxt(ev) {
+   ev.target.select()
 }
 
 function selectedLine(ev) {
@@ -206,7 +239,7 @@ function selectedLine(ev) {
 
 function getClickedPos(ev) {
    let pos = { posX: ev.offsetX, posY: ev.offsetY }
-   if (gTouchEvs.includes(ev.type) && ev.target === elCanvas) {
+   if (gTouchEvs.includes(ev.type)) {
       ev.preventDefault()
       ev = ev.changedTouches[0]
       pos = {
@@ -219,24 +252,4 @@ function getClickedPos(ev) {
 
 function getClickedLine() {
    return gMeme.lines[gMeme.selectedLineIdx]
-}
-
-
-function switchLine(ev) {
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx++]
-   if (gMeme.lines[gMeme.selectedLineIdx] < gMeme.lines.length) gMeme.lines[0]
-   renderCanvas()
-}
-
-function moveLineUp(ev) {
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx].posY--
-   renderCanvas()
-}
-
-function moveLineDown(ev) {
-   ev.preventDefault()
-   gMeme.lines[gMeme.selectedLineIdx].posY++
-   renderCanvas()
 }

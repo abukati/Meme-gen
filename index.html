@@ -4,7 +4,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="styles/styles.css">
+   <link rel="stylesheet" href="styles/styles.css" />
    <title>MemeGen</title>
 </head>
 <body>
@@ -13,7 +13,9 @@
 
       <header>
          <div class="nav-container">
-            <div class="logo"><img src="misc/images/LOGO.png" alt="logo" /></div>
+            <div class="logo">
+               <a href=""><img src="misc/images/LOGO.png" alt="logo" /></a>
+            </div>
             <div class="nav-links">
                <ul>
                   <li><a href="">Gallery</a></li>
@@ -31,7 +33,7 @@
 
       <main>
          <div class="meme-filter">
-            <input type="text" placeholder="Search">
+            <input type="text" placeholder="Search" />
          </div>
 
          <div class="template-gallery"></div>
@@ -42,33 +44,40 @@
                <canvas id="canvas"></canvas>
 
                <div class="controllers canvas-grid">
-                  <input type="text" class="text-input">
+                  <input type="text" class="text-input" />
 
-                  <button class="btn btn-add-line">+</button>
+                  <button class="btn btn-add-line">
+                     <img src="misc/images/plus-solid.svg" alt="add line" />
+                  </button>
                   <button class="btn btn-remove-line">
-                     <img src="misc/images/trash-alt-regular.svg" alt="remove-line">
+                     <img src="misc/images/trash-alt-regular.svg" alt="remove-line" />
                   </button>
 
-                  <button class="btn btn-switch-line">switch</button>
-                  <button class="btn btn-line-up">up</button>
-                  <button class="btn btn-line-down">down</button>
+                  <button class="btn btn-switch-line">
+                     <img src="misc/images/sort-solid.svg" alt="switch-line" />
+                  </button>
+                  <button class="btn btn-line-up">
+                     <img src="misc/images/arrow-up-solid.svg" alt="move-line-up" />
+                  </button>
+                  <button class="btn btn-line-down">
+                     <img src="misc/images/arrow-down-solid.svg" alt="move-line-down" />
+                  </button>
 
                   <button class="btn btn-increase-font-size">
-                     A+ 
-                     <!-- ADD IMG -->
+                     <img src="misc/images/search-plus-solid.svg" alt="increase font size" />
                   </button>
                   <button class="btn btn-decrease-font-size">
-                     A-
-                     <!-- ADD IMG -->
+                     <img src="misc/images/search-minus-solid.svg" alt="decrease font size" />
                   </button>
+
                   <button class="btn btn-align-left">
-                     <img src="misc/images/align-left-solid.svg" alt="align-left">
+                     <img src="misc/images/align-left-solid.svg" alt="align-left" />
                   </button>
                   <button class="btn btn-align-center">
-                     <img src="misc/images/align-center-solid.svg" alt="align-center">
+                     <img src="misc/images/align-center-solid.svg" alt="align-center" />
                   </button>
                   <button class="btn btn-align-right">
-                     <img src="misc/images/align-right-solid.svg" alt="align-right">
+                     <img src="misc/images/align-right-solid.svg" alt="align-right" />
                   </button>
 
                   <select class="font-select">
@@ -76,13 +85,14 @@
                      <option value="arial">Arial</option>
                      <option value="verdana">Verdana</option>
                   </select>
+
                   <div class="stroke-selector">
                      <button class="btn btn-stroke-color">
                         <label for="stroke-input">
                            <img src="misc/images/paint-brush-solid.svg" alt="stroke select" />
                         </label>
                      </button>
-                     <input type="color" class="stroke-input" id="stroke-input">
+                     <input type="color" class="stroke-input" id="stroke-input" />
                   </div>
                   <div class="fill-selector">
                      <button class="btn btn-fill-color">
@@ -90,26 +100,42 @@
                            <img src="misc/images/fill-solid.svg" alt="fil select" />
                         </label>
                      </button>
-                     <input type="color" class="fill-input" id="fill-input">
+                     <input type="color" class="fill-input" id="fill-input" />
                   </div>
                   
                   <button class="btn btn-save">Save</button>
                </div>
             </div>
          </div>
+
+         <div class="modal-container hide-modal">
+            <div class="download-meme">
+               <a href="" class="btn btn-download" download="my-meme.jpg">
+                  <img src="misc/images/download-solid.svg" alt="download" />
+               </a>
+            </div>
+            <div class="fb-share">
+               <a href="" class="btn btn-fb-share">
+                  <img src="misc/images/facebook.svg" alt="fb-share" />
+               </a>
+            </div>
+            <div class="share">
+               <a href="" class="btn btn-share">
+                  <img src="misc/images/share-alt-solid.svg" alt="share" />
+               </a>
+            </div>
+         </div>
+         
       </main>
-
-      <footer>
-
-      </footer>
-
+      
    </div>
-
+   
    <script src="js/services/storage.service.js"></script>
    <script src="js/services/canvas.service.js"></script>
    <script src="js/services/meme.service.js"></script>
-   <script src="js/memeListeners.js"></script>
    <script src="js/main.js"></script>
+   <script src="js/memeListeners.js"></script>
+   <script src="js/services/share.service.js"></script>
 
    <script>
       (function initMobileMenu() {
@@ -117,7 +143,6 @@
       const navMenu = document.querySelector('.nav-links')
       const navLink = navMenu.querySelectorAll('li')
       const main = document.querySelector('main')
-      const footer = document.querySelector('footer')
 
       hamburger.addEventListener('click', openMobileMenu)
       navLink.forEach(link => link.addEventListener('click', closeMobileMenu))
@@ -128,10 +153,8 @@
          navMenu.classList.toggle('active')
          if (navMenu.classList.contains('active')) {
             main.style.filter = 'blur(.7em)'
-            footer.style.filter = 'blur(.7em)'
          } else {
             main.style.filter = 'none'
-            footer.style.filter = 'none'
          }
       }
 
@@ -139,7 +162,6 @@
          hamburger.classList.remove('active')
          navMenu.classList.remove('active')
          main.style.filter = 'none'
-         footer.style.filter = 'none'
       }
 
    })()

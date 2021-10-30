@@ -4,6 +4,7 @@
 
 const elTxtInput = document.querySelector('.text-input')
 elTxtInput.addEventListener('input', txtInput)
+elTxtInput.addEventListener('click', selectAllTxt)
 
 const elAddTxtBtn = document.querySelector('.btn-add-line')
 elAddTxtBtn.addEventListener('click', addTxt)
@@ -45,14 +46,14 @@ const elFillInput = document.querySelector('.fill-input')
 elFillInput.addEventListener('change', fillChange)
 
 const elSaveBtn = document.querySelector('.btn-save')
-elSaveBtn.addEventListener('click', saveMeme)
+elSaveBtn.addEventListener('click', onSaveMeme)
 
 function loadCanvasListeners() {
    elCanvas.addEventListener('mousedown', pressLine)
    elCanvas.addEventListener('mouseup', releaseLine)
    elCanvas.addEventListener('mousemove', dragLine)
-   elCanvas.addEventListener('touchstart', pressLine)
-   elCanvas.addEventListener('touchend', releaseLine)
+   elCanvas.addEventListener('touchstart', touchStart)
+   elCanvas.addEventListener('touchend', touchEnd)
    elCanvas.addEventListener('touchmove', dragLine)
 }
 

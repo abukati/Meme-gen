@@ -72,3 +72,17 @@ function drawRect(posX, posY, txt) {
    else gCtx.strokeRect(posX - width * 0.5 - 70, posY - parseInt(txt.size), width + 35, height)
    gCtx.closePath()
 }
+
+const onSaveMeme = (ev) => {
+   let elModal = document.querySelector('.modal-container')
+   elModal.classList.remove('hide-modal')
+   
+   let elDownload = document.querySelector('.btn-download')
+   elDownload.addEventListener('click', downloadMeme)
+
+   let elFBShare = document.querySelector('.btn-fb-share')
+   elFBShare.addEventListener('click', shareMemeFB)
+   
+   let elShare = document.querySelector('.btn-share')
+   elShare.addEventListener('click', webShare)
+}
