@@ -43,7 +43,6 @@ function onMemeClick(id) {
    renderCanvas(id)
    let elGenerator = document.querySelector('.meme-generator')
    elGenerator.classList.replace('hidden', 'show-editor')
-
 }
 
 function drawTxt() {
