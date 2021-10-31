@@ -26,7 +26,7 @@ const gImages = [
 
 const gSavedMemes = []
 
-_loadMemes()
+// _loadMemes()
 
 const getImages = () => gImages
 
@@ -34,5 +34,5 @@ const getSavedMemes = () => gSavedMemes
 
 function _loadMemes() {
    let memes = loadFromStorage(STORAGE_KEY)
-   if (memes) memes.forEach(meme => gSavedMemes.push(meme))
+   return memes
 }

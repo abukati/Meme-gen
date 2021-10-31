@@ -49,13 +49,10 @@ const elSaveBtn = document.querySelector('.btn-save')
 elSaveBtn.addEventListener('click', onSaveMeme)
 
 function loadCanvasListeners() {
+   elCanvas.addEventListener('touchstart', touchStart)
+   elCanvas.addEventListener('touchend', touchEnd)
+   elCanvas.addEventListener('touchmove', touchMove)
    elCanvas.addEventListener('mousedown', pressLine)
    elCanvas.addEventListener('mouseup', releaseLine)
    elCanvas.addEventListener('mousemove', dragLine)
-   elCanvas.addEventListener('touchstart', touchStart)
-   elCanvas.addEventListener('touchend', touchEnd)
-   elCanvas.addEventListener('touchmove', dragLine)
 }
-
-
-

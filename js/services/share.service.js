@@ -7,7 +7,6 @@ function downloadMeme(ev) {
    ev.href = link
 }
 
-
 function shareMemeFB(ev) {
    ev.preventDefault()
    let link = getURL('image/png')
@@ -23,21 +22,6 @@ function shareMemeFB(ev) {
    doUploadImg(link, onSuccess)
 }
 
-
-async function webShare(ev) {
-   let shareData = {
-      title: 'My meme',
-      url: getURL('image/png')
-   }
-
-   try {
-      await navigator.share(shareData)
-   } catch (e) {
-      console.error(e)
-   }
-}
-
-
 function doUploadImg(url, onSuccess) {
    let formData = new FormData()
    formData.append('img', url)
@@ -49,4 +33,17 @@ function doUploadImg(url, onSuccess) {
    .then(res => res.text())
    .then(url => onSuccess(url))
    .catch(err => console.error(err))
+}
+
+async function webShare(link) {
+   let shareData = {
+      title: 'My meme',
+      url: link
+   }
+
+   try {
+      await navigator.share(shareData)
+   } catch (e) {
+      console.error(e)
+   }
 }

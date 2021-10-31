@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="styles/styles.css" />
-   <title>MemeGen</title>
-</head>
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="styles/styles.css" />
+      <title>MemeGen</title>
+   </head>
 <body>
 
    <div class="container">
@@ -14,12 +14,12 @@
       <header>
          <div class="nav-container">
             <div class="logo">
-               <a href=""><img src="misc/images/LOGO.png" alt="logo" /></a>
+               <a href=""><img src="misc/images/logo.png" alt="logo" /></a>
             </div>
             <div class="nav-links">
                <ul>
                   <li><a href="">Gallery</a></li>
-                  <li><a href="">Memes</a></li>
+                  <li class="memes-tab"><a href="">Memes</a></li>
                   <li><a href="">About</a></li>
                </ul>
             </div>
@@ -32,9 +32,6 @@
       </header>
 
       <main>
-         <div class="meme-filter">
-            <input type="text" placeholder="Search" />
-         </div>
 
          <div class="template-gallery"></div>
 
@@ -130,44 +127,20 @@
          
       </main>
       
+      <footer>
+         <div class="right">
+            &copy;offerights. All rights reserved.
+         </div>
+      </footer>
+
    </div>
    
    <script src="js/services/storage.service.js"></script>
    <script src="js/services/canvas.service.js"></script>
    <script src="js/services/meme.service.js"></script>
-   <script src="js/main.js"></script>
-   <script src="js/memeListeners.js"></script>
    <script src="js/services/share.service.js"></script>
-
-   <script>
-      (function initMobileMenu() {
-      const hamburger = document.querySelector('.hamburger')
-      const navMenu = document.querySelector('.nav-links')
-      const navLink = navMenu.querySelectorAll('li')
-      const main = document.querySelector('main')
-
-      hamburger.addEventListener('click', openMobileMenu)
-      navLink.forEach(link => link.addEventListener('click', closeMobileMenu))
-      document.addEventListener('scroll', closeMobileMenu)
-
-      function openMobileMenu() {
-         hamburger.classList.toggle('active')
-         navMenu.classList.toggle('active')
-         if (navMenu.classList.contains('active')) {
-            main.style.filter = 'blur(.7em)'
-         } else {
-            main.style.filter = 'none'
-         }
-      }
-
-      function closeMobileMenu() {
-         hamburger.classList.remove('active')
-         navMenu.classList.remove('active')
-         main.style.filter = 'none'
-      }
-
-   })()
-   </script>
+   <script src="js/main.js"></script>
+   <script src="js/meme-listeners.js"></script>
 
 </body>
 </html>

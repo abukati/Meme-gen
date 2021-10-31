@@ -3,6 +3,7 @@
 document.body.onload = () => {
    renderGrid()
    initCanvas()
+   initMobileMenu()
 }
 
 function renderGrid() {
@@ -43,20 +44,19 @@ function onMemeClick(id) {
    loadCurrMeme(id)
    renderCanvas(id)
    let elGenerator = document.querySelector('.meme-generator')
-   elGenerator.classList.remove('hidden')
-   elGenerator.classList.add('show-editor')
+   elGenerator.classList.replace('hidden', 'show-editor')
 }
 
 function drawTxt() {
    gCtx.beginPath()
    gMeme.lines.forEach(line => {
-      gCtx.lineWidth = window.innerWidth < 768 ? 1 : 3
+      gCtx.lineWidth = window.innerWidth < MEDIUM_BREAKPOINT ? 1 : 3
       gCtx.strokeStyle = line.stroke
       gCtx.fillStyle = line.color
       gCtx.font = `bold ${line.size}px ${line.font}`
       gCtx.textAlign = line.align
-      gCtx.fillText(line.txt, (elCanvas.width / 2), line.posY)
-      gCtx.strokeText(line.txt, (elCanvas.width / 2), line.posY)
+      gCtx.fillText(line.txt, line.posX, line.posY)
+      gCtx.strokeText(line.txt, line.posX, line.posY)
    })
    gCtx.closePath()
 }
@@ -68,12 +68,12 @@ function drawRect(posX, posY, txt) {
    gCtx.beginPath()
    gCtx.setLineDash([5, 5])
    gCtx.strokeStyle = 'black'
-   if (window.innerWidth < 768) gCtx.strokeRect(posX - width * 0.7, posY - parseInt(txt.size), width + 15, height)
-   else gCtx.strokeRect(posX - width * 0.5 - 70, posY - parseInt(txt.size), width + 35, height)
+   if (window.innerWidth < MEDIUM_BREAKPOINT) gCtx.strokeRect(posX - width * 0.55, posY - parseInt(txt.size), width + 15, height)
+   else gCtx.strokeRect(posX - width * 0.55, posY - parseInt(txt.size), width + 35, height)
    gCtx.closePath()
 }
 
-const onSaveMeme = (ev) => {
+const onSaveMeme = () => {
    let elModal = document.querySelector('.modal-container')
    elModal.classList.remove('hide-modal')
    
@@ -85,4 +85,33 @@ const onSaveMeme = (ev) => {
    
    let elShare = document.querySelector('.btn-share')
    elShare.addEventListener('click', webShare)
+
+   saveMemeToStorage()
+}
+
+function initMobileMenu() {
+   const hamburger = document.querySelector('.hamburger')
+   const navMenu = document.querySelector('.nav-links')
+   const navLink = navMenu.querySelectorAll('li')
+   const main = document.querySelector('main')
+
+   hamburger.addEventListener('click', openMobileMenu)
+   navLink.forEach(link => link.addEventListener('click', closeMobileMenu))
+   document.addEventListener('scroll', closeMobileMenu)
+
+   function openMobileMenu() {
+      hamburger.classList.toggle('active')
+      navMenu.classList.toggle('active')
+      if (navMenu.classList.contains('active')) {
+         main.style.filter = 'blur(.7em)'
+      } else {
+         main.style.filter = 'none'
+      }
+   }
+
+   function closeMobileMenu() {
+      hamburger.classList.remove('active')
+      navMenu.classList.remove('active')
+      main.style.filter = 'none'
+   }
 }
