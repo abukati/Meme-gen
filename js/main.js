@@ -37,14 +37,13 @@ function resetInputs() {
 }
 
 function onMemeClick(id) {
-   let elFilter = document.querySelector('.meme-filter')
    let elGallery = document.querySelector('.template-gallery')
-   elFilter.style.display = 'none'
    elGallery.style.display = 'none'
    loadCurrMeme(id)
    renderCanvas(id)
    let elGenerator = document.querySelector('.meme-generator')
    elGenerator.classList.replace('hidden', 'show-editor')
+
 }
 
 function drawTxt() {
